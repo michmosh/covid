@@ -14,7 +14,7 @@ const ChartComponent = ()=>{
         Axios.get(`https://api.covid19api.com/dayone/country/${selectedCountry}`)
         .then(res=>{
             let dates = [],cases = [];
-            res.data.map(el=>{
+            res.data.forEach(el=>{
                 let date = new Date(el.Date);
                 dates.push( date.toDateString());
                 cases.push(el.Active);

@@ -39,8 +39,7 @@ export const renderBar = (ref,data)=>{
         options: {
           scales: {
             xAxes: [{
-                barPercentage: 0.4,
-                barPercentage: 0.5
+                
             }],
             yAxes: [{
               ticks: {
