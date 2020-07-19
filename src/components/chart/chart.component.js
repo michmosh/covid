@@ -7,9 +7,10 @@ import {renderLine , renderBar} from '../../utils/charts.utils';
 const ChartComponent = ()=>{
     let selectedCountry = useSelector(state => state.countries.selectedCountry);
     const chartRef = useRef(null); 
-    let graphStyle = "line";
+    const [graphStyle , setGraphStyle] =  useState("line");
     const [datesArray, setDatesArray] = useState([]);
     const [casesArray, setCasesArray] = useState([]);
+    const [chartElement , setChartElement] = useState(null);
     useEffect(() => {
         Axios.get(`https://api.covid19api.com/dayone/country/${selectedCountry}`)
         .then(res=>{
@@ -22,20 +23,21 @@ const ChartComponent = ()=>{
             const ref = chartRef.current.getContext("2d");
             setDatesArray(dates);
             setCasesArray(cases)
-            renderLine(ref,{dates,cases})
+            setChartElement(renderLine(ref,{dates,cases}))
         })
        
       }, [chartRef,selectedCountry]);
 
     const switchGraphStyle = ()=>{
         const ref = chartRef.current.getContext("2d");
+        chartElement.destroy()
         switch(graphStyle){
             case "line":
-                graphStyle = "bar";
-                return renderBar(ref , {dates:datesArray , cases:casesArray});
+                setGraphStyle("bar");
+                return setChartElement(renderBar(ref , {dates:datesArray , cases:casesArray}));
             default :
-                graphStyle = "line";
-                return renderLine(ref , {dates:datesArray , cases:casesArray});
+                setGraphStyle("line");
+                return setChartElement(renderLine(ref , {dates:datesArray , cases:casesArray}));
         }
         
     }

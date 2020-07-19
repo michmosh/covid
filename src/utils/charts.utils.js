@@ -1,7 +1,7 @@
 import Chart from 'chart.js';
 
 export const renderLine  = (ref , data)=>{
-    new Chart(ref, {
+    return new Chart(ref, {
         type: "line",
         data: {
             labels: data.dates,
@@ -33,7 +33,7 @@ export const renderBar = (ref,data)=>{
         datasets : [{data:data.cases ,backgroundColor: colors[0] }]
       };
 
-    new Chart(ref, {
+    return new Chart(ref, {
         type: 'bar',
         data:chartData,
         options: {
